@@ -1,0 +1,5 @@
+.module-container{
+    width: calc(100% - 205px);
+    float: left;
+    height: 100vh;
+}

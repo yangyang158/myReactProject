@@ -1,0 +1,12 @@
+.sider-bar{
+    height: 100vh;
+    width: 200px;
+    border-right: 1px solid #ccc;
+    float: left;
+}
+ul li{
+    line-height: 40px;
+    list-style:none;  
+    color: #fff;
+
+}
