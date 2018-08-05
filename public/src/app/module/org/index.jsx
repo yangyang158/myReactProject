@@ -5,7 +5,7 @@ export default class Home extends React.Component{
 
     render(){
         return (
-            <div className='org'>
+            <div className="org">
                 组织2
             </div>
         )

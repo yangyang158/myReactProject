@@ -31,7 +31,7 @@ let config = {
     output: {//输出文件
         path: __dirname + '/dest',//输出文件的路径---必须是绝对路径
         chunkFilename : '[name].[hash:8].js',
-        filename: "[name].[hash:8].bundle.js",//多个输出文件
+        filename: '[name].[hash:8].bundle.js',//多个输出文件
         //filename: "bundle.js",//单个输出文件
         //publicPath: '/public/',//用于指定在生产模式下页面里面引入的资源的路径（link标签的href、script标签的src）
 
@@ -68,6 +68,10 @@ let config = {
                 loader: 'url-loader?limit=8192',
             }
         ],
+    },
+    resolve: {
+        //alias: '',
+        extensions: ['.js', '.jsx']
     },
     devtool: 'source-map',//是否可调试
     plugins: [
@@ -136,8 +140,8 @@ switch(ENV){
             //解析css, 会将CSS单独打包成一个文件
             test: /\.css$/,
             loader: ExtractTextWebpackPlugin.extract({
-                fallback: "style-loader",
-                use: "css-loader"
+                fallback: 'style-loader',
+                use: 'css-loader'
             })
         });
         break;
@@ -158,11 +162,11 @@ switch(ENV){
                 disableHostCheck: true,
                 proxy: {
                     //请求带api的接口 自动转发到端口7308
-                    '/api'  : {target: "http://localhost:7308"},
+                    '/api'  : {target: 'http://localhost:7308'},
                     '/app'  : {target: `http://localhost:${port}`, pathRewrite: {'$':'.html'}},
                     '/mobile'  : {target: `http://localhost:${port}`, pathRewrite: {'$':'.html'}},
                     '/'  : {target: `http://localhost:${port}`, pathRewrite: {'$':'app.html'}}
-                  }
+                }
             }
         });
         config.module.rules.push({
