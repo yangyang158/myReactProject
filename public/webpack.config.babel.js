@@ -1,14 +1,18 @@
+'use strict';
+
 import webpack from 'webpack';
-//作用：项目启动后自动在浏览器 打开
-import OpenBrowserPlugin from 'open-browser-webpack-plugin';
 //作用：自动生成 HTML 文件，使用 script 来包含所有你的 webpack bundles
-import HtmlWebpackPlugin  from 'html-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 //获取版本的相关信息
 import gitRevision from 'git-revision';
 //将.css样式打包到一个单独的CSS文件中。因此样式不再被内嵌到JS包中，而是在单独的CSS文件
-import ExtractTextWebpackPlugin from 'extract-text-webpack-plugin';
-//打包完生成压缩文件
-import ZipPlugin from 'zip-webpack-plugin';
+// import ExtractTextWebpackPlugin from 'extract-text-webpack-plugin';
+import merge from 'webpack-merge';
+import CleanWebpackPlugin from 'clean-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
+import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
+
 import moment from 'moment';
 import _ from 'lodash';
 
@@ -27,7 +31,9 @@ let config = {
     //     'home': './src/home.jsx'
     // }
     // entry: './src/app.jsx',//一个入口文件
-    entry: {},
+    entry: {
+        vendor: ['@babel/polyfill', 'react', 'classnames', 'react-router', 'react-dom']
+    },
     output: {//输出文件
         path: __dirname + '/dest',//输出文件的路径---必须是绝对路径
         chunkFilename : '[name].[hash:8].js',
@@ -38,18 +44,20 @@ let config = {
     },
     module: {
         rules: [
-            // {//解析css, 会将CSS打包到JS文件中
-            //     test: /\.css$/, 
-            //     use: ['style-loader', 'css-loader'],
-            // },
-            // {
-            //     //解析css, 会将CSS单独打包成一个文件
-            //     test: /\.css$/,
-            //     loader: ExtractTextWebpackPlugin.extract({
-            //         fallback: "style-loader",
-            //         use: "css-loader"
-            //     })
-            // },
+            {
+                test: /\.less$/,
+                use: [MiniCssExtractPlugin.loader, 'css-loader', {
+                    loader: 'less-loader',
+                    options: {
+                        strictMath: true,
+                    }
+                }],
+                exclude: require('path').resolve(__dirname, 'dynamic-theme.less')
+            },
+            {
+                test: /\.css$/,
+                use: [MiniCssExtractPlugin.loader, 'css-loader']
+            },
             {//对JS文件进行编译(包括从ES6转换为ES5)
                 test: /\.js$/, 
                 use: ['babel-loader'],
@@ -66,8 +74,53 @@ let config = {
                 //2.文件大小大于limit，url-loader会调用file-loader进行处理，参数也会直接传给file-loader
                 test: /\.(png|jpg|gif)(\?[a-z0-9\-=]+)?$/,
                 loader: 'url-loader?limit=8192',
-            }
+            },
+            {
+                test: /\.(svg?)(\?[a-z0-9]+)?$/,
+                loader: 'file-loader'
+            },
+            {
+                test: /\.(woff(2)?)(\?[a-z0-9]+)?$/,
+                loader: 'url-loader'
+            },
+            {
+                test: require.resolve('moment'),
+                loader: 'expose-loader?moment'
+            },
+            {
+                test: require.resolve('lodash'),
+                loader: 'expose-loader?_'
+            },
         ],
+    },
+    optimization: {
+        runtimeChunk: {
+            name: 'manifest'
+        },
+        splitChunks:{
+            chunks: 'async',
+            minSize: 30000,
+            minChunks: 1,
+            maxAsyncRequests: 5,
+            maxInitialRequests: 3,
+            name: false,
+            cacheGroups: {
+                vendor: {
+                    name: 'vendor',
+                    chunks: 'initial',
+                    priority: -10,
+                    reuseExistingChunk: false,
+                    test: /node_modules\/(.*)\.js[x]?/
+                },
+                styles: {
+                    name: 'styles',
+                    test: /\.(less|css)$/,
+                    minChunks: 1,
+                    reuseExistingChunk: true,
+                    enforce: true
+                }
+            }
+        }
     },
     resolve: {
         //alias: '',
@@ -75,35 +128,15 @@ let config = {
     },
     devtool: 'source-map',//是否可调试
     plugins: [
-        new ExtractTextWebpackPlugin({
-            filename: '[name].[contenthash:8].css',
-            allChunks: true//将多个CSS文件打包到一个CSS文件
+        new MiniCssExtractPlugin({
+            filename: '[name].css',
+            chunkFilename: '[name].[contenthash:8].css'  // use contenthash *
         }),
         new webpack.HotModuleReplacementPlugin(),
-        // new OpenBrowserPlugin({
-        //     url: `http://localhost:${port}/app`,
-        // }),
-        new ZipPlugin({
-            path: __dirname,
-            filename: `${timetag}_dest.zip`,
+        new webpack.HashedModuleIdsPlugin(),
+        new webpack.ProvidePlugin({
+            $: 'jquery'
         }),
-        // new HtmlWebpackPlugin({//单个入口文件生成html文件
-        //     title: 'app',// 用于生成的HTML文件的标题
-        //     filename: 'app.html', // 生成的HTML文件的名字，默认就是index.html
-        //     template: 'index.ejs',// 有时候，插件自动生成的html文件，并不是我们需要结构，我们需要给它指定一个模板，让插件根据我们给的模板生成html
-        //     inject: 'body',// 有四个选项值 true|body|head|false。true|body:script标签位于html文件的 body 底部；head:插入的js文件位于head标签内；false:不插入生成的js文件，只生成一个纯html
-        //     // minify: {"removeComments": true, "collapseWhitespace": true},//压缩
-        //     // minify: false,//不压缩
-        //     favicon: 'assets/img/favicon.ico',//给定的图标路径，可将其添加到输出html中。
-        //     // excludeChunks: [],//排除特定块
-        //     // chunks: [],//限定特定的块
-        //     banner: {//打包分支、时间、tag标
-        //         //branch: gitRevision('branch'),
-        //         //tag: gitRevision('tag'),
-        //         date: moment().format('YYMMDD_HHmmss'),
-        //     },
-        // }),
-
     ],
 }
 
@@ -122,9 +155,10 @@ function addEntry(){
             favicon: 'assets/img/favicon.ico',//给定的图标路径，可将其添加到输出html中。
             // excludeChunks: [],//排除特定块
             chunks: ['manifest', 'vendor', page.name],//限定特定的块
+            chunksSortMode: 'none',
             banner: {//打包分支、时间、tag标
-                //branch: gitRevision('branch'),
-                //tag: gitRevision('tag'),
+                branch: gitRevision('branch'),
+                tag: gitRevision('tag'),
                 date: moment().format('YYMMDD_HHmmss'),
             },
         })
@@ -136,13 +170,20 @@ addEntry();
 
 switch(ENV){
     case 'production':
-        config.module.rules.push({
-            //解析css, 会将CSS单独打包成一个文件
-            test: /\.css$/,
-            loader: ExtractTextWebpackPlugin.extract({
-                fallback: 'style-loader',
-                use: 'css-loader'
-            })
+        config = merge(config, {
+            optimization: {
+                minimizer: [
+                    new UglifyJsPlugin({
+                        cache: true,
+                        parallel: true,
+                        sourceMap: true,
+                    }),
+                    new OptimizeCSSAssetsPlugin({})  // use OptimizeCSSAssetsPlugin
+                ]
+            },
+            plugins: [
+                new CleanWebpackPlugin([TARGET]),
+            ]
         });
         break;
     case 'development':
@@ -168,10 +209,6 @@ switch(ENV){
                     '/'  : {target: `http://localhost:${port}`, pathRewrite: {'$':'app.html'}}
                 }
             }
-        });
-        config.module.rules.push({
-            test: /\.css$/, 
-            use: ['style-loader', 'css-loader'],
         });
         break;
 }

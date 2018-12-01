@@ -27,8 +27,7 @@ module.exports = {
         }
     },
     'rules': {
-        'indent': ['error', 4, {'VariableDeclarator':4, 'SwitchCase': 1}],
-        'no-unused-vars': ['warn'],//未使用过的变量
+        'no-unused-vars': 0,//未使用过的变量
         'no-console': ['warn', {allow: ['warn', 'error']}],
         'eqeqeq': ['warn', 'always'],
         'max-len': ['warn', 120],
