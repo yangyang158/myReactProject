@@ -8,6 +8,7 @@ import gitRevision from 'git-revision';
 //将.css样式打包到一个单独的CSS文件中。因此样式不再被内嵌到JS包中，而是在单独的CSS文件
 // import ExtractTextWebpackPlugin from 'extract-text-webpack-plugin';
 import merge from 'webpack-merge';
+import DashboardPlugin from 'webpack-dashboard/plugin';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
@@ -28,6 +29,7 @@ let port = '6001';
 let timetag = moment().format('YYMMDD_HHmmss');
 
 let config = {
+    mode: ENV,
     //多个入口文件的格式 {
     //     'app': './src/app.jsx',
     //     'home': './src/home.jsx'
@@ -134,7 +136,6 @@ let config = {
             filename: '[name].css',
             chunkFilename: '[name].[contenthash:8].css'  // use contenthash *
         }),
-        new webpack.HotModuleReplacementPlugin(),
         new webpack.HashedModuleIdsPlugin(),
         new webpack.ProvidePlugin({
             $: 'jquery'
@@ -188,30 +189,33 @@ switch(ENV){
             ]
         });
         break;
-    case 'development':
-        _.merge(config, {
-            devServer: {//webpack-dev-server是一个小型的Node.js Express服务器
-                host: 'localhost',
-                port: port,
-                // hot： true,//热替换
-                open:true, // 自动打开浏览器
-                openPage: 'app',//此时就会在打开http://localhost:${port}/app
-                lazy: false,
-                compress: true, //一切服务都启用gzip 压缩
-                headers: {
-                    'X-Frame-Options': 'SAMEORIGIN',
-                    'X-XSS-Protection': '1; mode=block',
-                },
-                disableHostCheck: true,
-                proxy: {
-                    //请求带api的接口 自动转发到端口7308
-                    '/api'  : {target: 'http://localhost:7308'},
-                    '/app'  : {target: `http://localhost:${port}`, pathRewrite: {'$':'.html'}},
-                    '/mobile'  : {target: `http://localhost:${port}`, pathRewrite: {'$':'.html'}},
-                    '/'  : {target: `http://localhost:${port}`, pathRewrite: {'$':'app.html'}}
+        case 'development':
+            config = merge(config, {
+                plugins: [
+                    new DashboardPlugin(),
+                ],
+                devServer: {//webpack-dev-server是一个小型的Node.js Express服务器
+                    host: 'localhost',
+                    port: port,
+                    // hot: true,//热替换
+                    open:true, // 自动打开浏览器
+                    openPage: 'app',//此时就会在打开http://localhost:${port}/app
+                    lazy: false,
+                    compress: true, //一切服务都启用gzip 压缩
+                    headers: {
+                        'X-Frame-Options': 'SAMEORIGIN',
+                        'X-XSS-Protection': '1; mode=block',
+                    },
+                    disableHostCheck: true,
+                    proxy: {
+                        //请求带api的接口 自动转发到端口7308
+                        '/api'  : {target: 'http://localhost:7308'},
+                        '/app'  : {target: `http://localhost:${port}`, pathRewrite: {'$':'.html'}},
+                        '/mobile'  : {target: `http://localhost:${port}`, pathRewrite: {'$':'.html'}},
+                        '/'  : {target: `http://localhost:${port}`, pathRewrite: {'$':'app.html'}}
+                    }
                 }
-            }
-        });
+            });
         break;
 }
 module.exports = config;
