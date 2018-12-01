@@ -20,6 +20,8 @@ import _ from 'lodash';
 let args = require('node-args');
 let ENV = args.env || 'development';
 let isProduction = ENV === 'production';
+let TARGET = `${__dirname}/dest`;
+
 
 console.log('__dirname', __dirname)// 为：/Users/candy/个人练习/myReact/public
 let port = '6001';
