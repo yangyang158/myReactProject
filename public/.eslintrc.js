@@ -13,6 +13,10 @@ module.exports = {
         'react',
         'jsx-control-statements'
     ],
+    'globals': {
+        //配置全局变量
+        '_': true,
+    },
     'env': {
         'browser': true,
         'node': true,
@@ -27,7 +31,7 @@ module.exports = {
         }
     },
     'rules': {
-        'no-unused-vars': 0,//未使用过的变量
+        'no-unused-vars': 0,//未使用过的变量0:关闭规则，1:开启规则
         'no-console': ['warn', {allow: ['warn', 'error']}],
         'eqeqeq': ['warn', 'always'],
         'max-len': ['warn', 120],
