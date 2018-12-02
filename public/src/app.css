@@ -1,5 +1,6 @@
 .module-container{
-    width: calc(100% - 205px);
+    width: calc(100% - 225px);
     float: left;
     height: 100vh;
+    padding: 0 10px;
 }

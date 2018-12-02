@@ -43,7 +43,8 @@
     "rxjs": "^6.2.1",
     "rxjs-compat": "^6.2.1",
     "style-loader": "0.23.1",
-    "less-loader": "4.1.0"
+    "less-loader": "4.1.0",
+    "less": "3.8.1"
   },
   "devDependencies": {
     "@babel/cli": "7.1.5",

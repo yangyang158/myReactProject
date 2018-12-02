@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, BrowserRouter, HashRouter, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import './index.css';
+import './index.less';
 
 
 export default withRouter(class Siderbar extends React.Component{
@@ -17,11 +17,11 @@ export default withRouter(class Siderbar extends React.Component{
     render(){
         //let {t} = this.props;
         return(
-            <div className='sider-bar'>
+            <div className="sider-bar">
                 <ul>
-                    <li><a href='#/home'>首页</a></li>
-                    <li><a href='#/report'>报表</a></li>
-                    <li><a href='#/org'>组织</a></li>
+                    <li><a href="#/home">首页</a></li>
+                    <li><a href="#/upload">upload</a></li>
+                    <li><a href="#/org">组织</a></li>
                 </ul>
             </div>
         ); 

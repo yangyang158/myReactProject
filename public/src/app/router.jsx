@@ -7,7 +7,7 @@ import { Route, Switch, Redirect, HashRouter, withRouter, } from 'react-router-d
 import Siderbar from './siderbar/index.jsx'; 
 import Home from './module/home/index.jsx';
 import Org from './module/org/index.jsx';
-import Report from './module/report/index.jsx';
+import Upload from './module/upload/index.jsx';
 
 
 let MainWithRouter = withRouter(class Index extends React.PureComponent {
@@ -39,7 +39,7 @@ let MainWithRouter = withRouter(class Index extends React.PureComponent {
                             <Switch>
                                 <Route exact={true} path="/home" component={Home}/>
                                 <Route exact={true} path="/org" component={Org}/>
-                                <Route exact={true} path="/report" component={Report}/>
+                                <Route exact={true} path="/upload" component={Upload}/>
                                 <Redirect to='/home' />
                             </Switch>
                         </main>
