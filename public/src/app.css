@@ -1,3 +1,7 @@
+*{
+    margin: 0;
+    padding: 0;
+}
 .module-container{
     width: calc(100% - 225px);
     float: left;

@@ -16,11 +16,13 @@ module.exports = {
     'globals': {
         //配置全局变量
         '_': true,
+        'moment': true
     },
     'env': {
         'browser': true,
         'node': true,
         'es6': true,
+        'jsx-control-statements/jsx-control-statements': true
     },
     "ecmaFeatures": {
         "jsx": true
@@ -46,6 +48,7 @@ module.exports = {
         'react/display-name': 'off',
         'react/prop-types': 'off',
         'jsx-quotes': ['error', 'prefer-double'],
+        'react/jsx-no-undef': [2, { allowGlobals: true }],
 
         // 'react/sort-comp': 0,
         // 'react/jsx-indent': [2, 4],

@@ -14,7 +14,7 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 
-import moment from 'moment';
+// import moment from 'moment';
 import _ from 'lodash';
 
 //获取当前环境
@@ -24,9 +24,9 @@ let isProduction = ENV === 'production';
 let TARGET = `${__dirname}/dest`;
 
 
-console.log('__dirname', __dirname)// 为：/Users/candy/个人练习/myReact/public
-let port = '6001';
-let timetag = moment().format('YYMMDD_HHmmss');
+console.log('__dirname', __dirname, require.resolve('moment'))// 为：/Users/candy/个人练习/myReact/public
+let port = '6009';
+// let timetag = moment().format('YYMMDD_HHmmss');
 
 let config = {
     mode: ENV,
@@ -126,6 +126,7 @@ let config = {
             }
         }
     },
+    //处理文件的扩展名,import文件时不带文件扩展名时默认添加.js
     resolve: {
         //alias: '',
         extensions: ['.js', '.jsx']
@@ -162,7 +163,7 @@ function addEntry(){
             banner: {//打包分支、时间、tag标
                 branch: gitRevision('branch'),
                 tag: gitRevision('tag'),
-                date: moment().format('YYMMDD_HHmmss'),
+                // date: moment().format('YYMMDD_HHmmss'),
             },
         })
         config.plugins.push(plugin);
