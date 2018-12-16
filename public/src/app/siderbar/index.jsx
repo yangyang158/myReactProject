@@ -19,9 +19,9 @@ export default withRouter(class Siderbar extends React.Component{
         return(
             <div className="sider-bar">
                 <ul>
-                    <li><a href="#/home">首页</a></li>
-                    <li><a href="#/upload">upload</a></li>
-                    <li><a href="#/org">组织</a></li>
+                    <li><a href="#/layout">布局</a></li>
+                    <li><a href="#/upload">上传</a></li>
+                    <li><a href="#/drag">拖拽</a></li>
                 </ul>
             </div>
         ); 

@@ -5,8 +5,8 @@ import { Route, Switch, Redirect, HashRouter, withRouter, } from 'react-router-d
 
 
 import Siderbar from './siderbar/index.jsx'; 
-import Home from './module/home/index.jsx';
-import Org from './module/org/index.jsx';
+import Layout from './module/layout/index.jsx';
+import Drag from './module/drag/index.jsx';
 import Upload from './module/upload/index.jsx';
 
 
@@ -34,13 +34,13 @@ let MainWithRouter = withRouter(class Index extends React.PureComponent {
             <HashRouter>
                 <div>
                     <Siderbar />
-                    <div className='module-container'>
+                    <div className="module-container">
                         <main>
                             <Switch>
-                                <Route exact={true} path="/home" component={Home}/>
-                                <Route exact={true} path="/org" component={Org}/>
+                                <Route exact={true} path="/layout" component={Layout}/>
+                                <Route exact={true} path="/drag" component={Drag}/>
                                 <Route exact={true} path="/upload" component={Upload}/>
-                                <Redirect to='/home' />
+                                <Redirect to="/layout" />
                             </Switch>
                         </main>
                     </div>
