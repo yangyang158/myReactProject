@@ -24,7 +24,12 @@ export default new class LayoutStore{
         propertyName: 'align-content',
         desc: '定义了多根轴线的对齐方式。如果项目只有一根轴线，该属性不起作用',
         propertyValue: ['flex-start', 'flex-end', 'center', 'space-between', 'space-around', 'stretch']
-    }, 
+    }, {
+        propertyName: 'flex-flow',
+        desc: 'flex-flow属性是flex-direction属性和flex-wrap属性的简写形式，默认值为row nowrap',
+        propertyValue: []
+
+    },
         '2、项目的属性',
     {
         propertyName: 'order',
@@ -44,6 +49,16 @@ export default new class LayoutStore{
         propertyName: 'flex-basis',
         desc: '定义了在分配多余空间之前，项目占据的主轴空间（main size）。比如可以设为跟width或height属性一样的值（比如350px），则项目将占据固定空间',
         propertyValue: [350]
+
+    }, {
+        propertyName: 'flex',
+        desc: 'flex属性是flex-grow, flex-shrink 和 flex-basis的简写，默认值为0 1 auto。建议优先使用这个属性，而不是单独写三个分离的属性，因为浏览器会推算相关值。',
+        propertyValue: []
+
+    }, {
+        propertyName: 'align-self',
+        desc: '允许单个项目有与其他项目不一样的对齐方式，可覆盖align-items属性。默认值为auto，表示继承父元素的align-items属性，如果没有父元素，则等同于stretch',
+        propertyValue: []
 
     }]
 
