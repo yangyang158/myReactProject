@@ -1,8 +1,10 @@
 import React from 'react';
 import store from './index.js';
+import {PDFtoIMG} from 'react-pdf-to-image';
 import {observer} from 'mobx-react';
+import file from '../../../../assets/file/data.pdf';
 @observer
-export default class Home extends React.Component{
+export default class FileDetal extends React.Component{
 
 
     render(){
@@ -14,6 +16,21 @@ export default class Home extends React.Component{
                     <input type="submit" value="提交" />
                 </form>
                 <iframe id="uploadTarget" name="uploadTarget" style={{display:'none'}}></iframe>
+                <h1></h1>
+                <button onClick={store.previewPDF}>预览PDF</button>
+                <If condition={store.visible}>
+                    <div className="preview-pdf">
+                        <PDFtoIMG file={file}>
+                            {({pages}) => {
+                                console.log('pages', pages)
+                                if (!pages.length) return 'Loading...';
+                                return pages.map((page, index)=>
+                                    <img key={index} src={page}/>
+                                );
+                            }}
+                        </PDFtoIMG>
+                    </div>
+                </If>
             </div>
         )
     }

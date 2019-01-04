@@ -80,7 +80,7 @@ let config = {
                 loader: 'url-loader?limit=8192',
             },
             {
-                test: /\.(svg?)(\?[a-z0-9]+)?$/,
+                test: /\.(svg|pdf?)(\?[a-z0-9]+)?$/,
                 loader: 'file-loader'
             },
             {

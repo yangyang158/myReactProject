@@ -1,8 +1,9 @@
 import {observable, action, } from 'mobx';
 
-export default new class reportStore {
+export default new class FileDetailStore {
 
     @observable form = '';
+    @observable visible = false;
 
     @action
     initForm = (node)=>{
@@ -50,5 +51,10 @@ export default new class reportStore {
         let canvas = document.querySelector('canvas');
         let newImage = canvas.toDataURL('image/jpeg');
         console.log('new图片', newImage)
+    }
+
+    @action
+    previewPDF = ()=>{
+        this.visible = !this.visible;
     }
 }
