@@ -16,6 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "babel-plugin-jsx-control-statements": "4.0.0",
+    "classnames": "^2.2.6",
     "css-loader": "1.0.1",
     "extract-text-webpack-plugin": "^3.0.2",
     "i18next": "12.0.0",
