@@ -212,7 +212,7 @@ switch(ENV){
                         //请求带api的接口 自动转发到端口7308
                         '/api'  : {target: 'http://localhost:7308'},
                         '/app'  : {target: `http://localhost:${port}`, pathRewrite: {'$':'.html'}},
-                        '/mobile'  : {target: `http://localhost:${port}`, pathRewrite: {'$':'.html'}},
+                        '/app-css'  : {target: `http://localhost:${port}`, pathRewrite: {'$':'.html'}},
                         '/'  : {target: `http://localhost:${port}`, pathRewrite: {'$':'app.html'}}
                     }
                 }

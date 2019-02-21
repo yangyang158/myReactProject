@@ -2,6 +2,6 @@ module.exports = [{
     name: 'app',
     title: 'app',
 }, {
-    name: 'mobile',
-    name: 'mobile'
+    name: 'app-css',
+    title: 'app-css'
 }]

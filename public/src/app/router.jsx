@@ -8,6 +8,7 @@ import Siderbar from './siderbar/index.jsx';
 import Layout from './module/layout/index.jsx';
 import Drag from './module/drag/index.jsx';
 import Upload from './module/upload/index.jsx';
+import Date from './module/date/index.jsx';
 
 
 let MainWithRouter = withRouter(class Index extends React.PureComponent {
@@ -26,9 +27,6 @@ let MainWithRouter = withRouter(class Index extends React.PureComponent {
 
     render(){
         let {location, match, history} = this.props;
-        console.log('location', location)
-        console.log('match', match)
-        console.log('history', history)
 
         return(
             <HashRouter>
@@ -39,8 +37,9 @@ let MainWithRouter = withRouter(class Index extends React.PureComponent {
                             <Switch>
                                 <Route exact={true} path="/layout" component={Layout}/>
                                 <Route exact={true} path="/drag" component={Drag}/>
-                                <Route exact={true} path="/upload" component={Upload}/>
-                                <Redirect to="/layout" />
+                                <Route exact={true} path="/upload" component={Upload} />
+                                <Route exact={true} path="/date" component={Date} />
+                                <Redirect to="/date" />
                             </Switch>
                         </main>
                     </div>
