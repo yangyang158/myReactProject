@@ -12,12 +12,12 @@
         width: calc((100% - 120px) / 6);
         margin-right: 20px;
         & .month-year{
-            height: 16%;
+            height: 60px;
             font-size: 20px;
             color: #53a600;
         }
         & .month-week{
-            height: 12%;
+            height: 30px;
             & .week{
                 display: inline-block;
                 width: calc(100% / 7);
@@ -28,17 +28,39 @@
             }
         }
         & .month-date{
-            height: 72%;
-            & .date{
+            height: calc(100% - 90px);
+            & .other-month{
+                color: rgba(0, 0, 0, 0.25);
+            }
+            & .other-month, & .lunar{
+                color: #666;
+            }
+
+            & .day-box{
+                height: 17px;
+                overflow: hidden;
+                & .throttle, & .lunar-animation{
+                    display: inline-block;
+                    color: #53a600;
+                }
+                & .day-detail{
+                    animation: throttle 3s infinite;  
+                }
+            }
+            & .month-day{
                 float: left;
                 width: calc(100% / 7);
                 height: calc(100% / 6);
                 text-align: center;
                 font-size: 12px;
-            } 
-            & .other-month{
-                color: rgba(0, 0, 0, 0.25);
+                & p{
+                    font-size: 14px;
+                }
             }
         }
     }
+}
+@keyframes throttle{
+    from { transform: translateY(0px);}
+    to {transform: translateY(-17px);}
 }
