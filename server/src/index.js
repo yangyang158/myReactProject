@@ -17,6 +17,6 @@ app.use(router.load('/api', `${__dirname}/mocker`).routes());
 //使用非严格模式，解析HTTP DELETE请求的请求体Body
 app.use(bodify({strict: false}));
 
-const port = 7308;
+const port = 7310;
 app.listen(port);
 console.log(`HRONE static server started: http://localhost:${chalk.red(port)}`);

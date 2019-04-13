@@ -6,13 +6,6 @@ import './index.less';
 
 
 export default withRouter(class Siderbar extends React.Component{
-    componentDidMount(){
-        console.log(this.props);
-    }
-
-    static contextTypes = {
-        location: PropTypes.object,
-    };
 
     render(){
         //let {t} = this.props;

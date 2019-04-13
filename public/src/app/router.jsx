@@ -11,19 +11,7 @@ import Upload from './module/upload/index.jsx';
 import Date from './module/date/index.jsx';
 
 
-let MainWithRouter = withRouter(class Index extends React.PureComponent {
-
-    static childContextTYpes = {
-        //获取当前页面的地址
-        location: PropTypes.object,
-    }
-
-    getChildContext() {
-        return {
-            //获取当前页面的地址
-            location: this.props.location,
-        }
-    }
+let MainWithRouter = withRouter(class Index extends React.Component {
 
     render(){
         let {location, match, history} = this.props;
@@ -60,4 +48,4 @@ export default class MainIndex extends React.PureComponent {
             </HashRouter>
         )
     }
-};
+}
