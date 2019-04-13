@@ -7,7 +7,7 @@ const router = require('koa-router-decors');
 
 const chalk = require('chalk');
 const path = require('path');
-
+import './proxy.js';
 
 const app = new Koa();
 
