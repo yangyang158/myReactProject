@@ -9,6 +9,7 @@ import Layout from './module/layout/index.jsx';
 import Drag from './module/drag/index.jsx';
 import Upload from './module/upload/index.jsx';
 import Date from './module/date/index.jsx';
+import D3Study from './module/d3-study/index.jsx';
 
 
 let MainWithRouter = withRouter(class Index extends React.Component {
@@ -27,6 +28,7 @@ let MainWithRouter = withRouter(class Index extends React.Component {
                                 <Route exact={true} path="/drag" component={Drag}/>
                                 <Route exact={true} path="/upload" component={Upload} />
                                 <Route exact={true} path="/date" component={Date} />
+                                <Route exact={true} path="/d3-study" component={D3Study} />
                                 <Redirect to="/date" />
                             </Switch>
                         </main>
