@@ -17,6 +17,7 @@ export default withRouter(class Siderbar extends React.Component{
                     <li><a href="#/drag">拖拽</a></li>
                     <li><a href="#/useCss">日期</a></li>
                     <li><a href="#/d3-study">d3学习</a></li>
+                    <li><a href="#/maptalks">maptalks学习</a></li>
                 </ul>
             </div>
         ); 

@@ -9,3 +9,8 @@
     padding: 0 10px;
     overflow: auto;
 }
+.module-container main{
+    height: 100%;
+    overflow: hidden;
+}
+
