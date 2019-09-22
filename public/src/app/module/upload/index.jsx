@@ -3,13 +3,18 @@ import store from './index.js';
 import {PDFtoIMG} from 'react-pdf-to-image';
 import {observer} from 'mobx-react';
 import file from '../../../../assets/file/data.pdf';
+import './index.less'
 @observer
 export default class FileDetal extends React.Component{
+
+    componentDidMount () {
+        store.autoScroll(60)
+    }
 
 
     render(){
         return (
-            <div>
+            <div className="upload-page">
                 <h1>form表单上传</h1>
                 <form action="api/common/upload" ref={node=>store.saveForm=node} method="post" encType="multipart/form-data" target="uploadTarget">
                     <input name="file" type="file" onChange={store.onFileSelected} />
@@ -31,6 +36,27 @@ export default class FileDetal extends React.Component{
                         </PDFtoIMG>
                     </div>
                 </If>
+                <div className="review_box">
+                    <div className="content">
+                        <p>1我在学习</p>
+                        <p>2我在学习</p>
+                        <p>3我在学习</p>
+                        <p>4我在学习</p>
+                        <p>5我在学习</p>
+                        <p>6我在学习</p>
+                        <p>7我在学习</p>
+                        <p>8我在学习</p>
+                        <p>9我在学习</p>
+                        <p>10我在学习</p>
+                        <p>11我在学习</p>
+                        <p>12我在学习</p>
+                        <p>13我在学习</p>
+                        <p>14我在学习</p>
+                        <p>15我在学习</p>
+                        <p>16我在学习</p>
+                    </div>
+                    <div className="content2"></div>
+                </div>
             </div>
         )
     }
