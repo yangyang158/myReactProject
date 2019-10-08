@@ -11,6 +11,9 @@ export default class FileDetal extends React.Component{
         store.autoScroll(60)
     }
 
+    componentWillUnmount () {
+        store.destory()
+    }
 
     render(){
         return (
@@ -27,7 +30,6 @@ export default class FileDetal extends React.Component{
                     <div className="preview-pdf">
                         <PDFtoIMG file={file}>
                             {({pages}) => {
-                                console.log('pages', pages)
                                 if (!pages.length) return 'Loading...';
                                 return pages.map((page, index)=>
                                     <img key={index} src={page}/>
@@ -36,6 +38,7 @@ export default class FileDetal extends React.Component{
                         </PDFtoIMG>
                     </div>
                 </If>
+                <h2>自滚动</h2>
                 <div className="review_box">
                     <div className="content">
                         <p>1我在学习</p>
@@ -56,6 +59,18 @@ export default class FileDetal extends React.Component{
                         <p>16我在学习</p>
                     </div>
                     <div className="content2"></div>
+                </div>
+                <h2>长列表优化</h2>
+                <div className="one-screen" onScroll={store.onScroll}>
+                    <div className="box">
+                        {
+                            store.showDataLists.map((data, index) => {
+                                return (
+                                    <div style={{top: 30*data.rowIndex}} key={data.rowIndex}>数字{data.value}</div>
+                                )
+                            })
+                        }
+                    </div>
                 </div>
             </div>
         )

@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --env=development --hot --inline --progress --colors --content-base ./",
     "start:watch": "nodemon --watch webpack.config.babel.js --exec \"webpack-dev-server --env=development --progress --colors\"",
-    "build": "npm run clean && webpack --env=production --progress --colors",
+    "build": "webpack --env=production --progress --colors",
     "clean": "rimraf dest",
     "eslint": "eslint ./src/",
     "precommit": "npm run eslint"
