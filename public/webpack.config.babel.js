@@ -80,7 +80,7 @@ let config = {
                 loader: 'url-loader?limit=8192',
             },
             {
-                test: /\.(svg|pdf?)(\?[a-z0-9]+)?$/,
+                test: /\.(svg|pdf|xml?)(\?[a-z0-9]+)?$/,
                 loader: 'file-loader'
             },
             {
@@ -135,7 +135,7 @@ let config = {
     plugins: [
         new MiniCssExtractPlugin({
             filename: '[name].css',
-            chunkFilename: '[name].[contenthash:8].css'  // use contenthash *
+            chunkFilename: '[name].[contenthash:8].css' // use contenthash *
         }),
         new webpack.HashedModuleIdsPlugin(),
         new webpack.ProvidePlugin({
@@ -182,7 +182,7 @@ switch(ENV){
                         parallel: true,
                         sourceMap: true,
                     }),
-                    new OptimizeCSSAssetsPlugin({})  // use OptimizeCSSAssetsPlugin
+                    new OptimizeCSSAssetsPlugin({}) // use OptimizeCSSAssetsPlugin
                 ]
             },
             plugins: [

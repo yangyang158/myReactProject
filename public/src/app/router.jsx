@@ -1,16 +1,45 @@
-import React from 'react';
+import React, {lazy, Suspense} from 'react';
 import { render } from 'react-dom';
 import PropTypes from 'prop-types';
 import { Route, Switch, Redirect, HashRouter, withRouter, } from 'react-router-dom';
-
-
+import DynamicImport from './module/dynamic-import/index'
 import Siderbar from './siderbar/index.jsx'; 
-import Layout from './module/layout/index.jsx';
-import Drag from './module/drag/index.jsx';
-import Upload from './module/upload/index.jsx';
-import Date from './module/date/index.jsx';
+
+// import Layout from './module/layout/index.jsx';
+// import Drag from './module/drag/index.jsx';
+// import Upload from './module/upload/index.jsx';
+// import Date from './module/date/index.jsx';
 import D3Study from './module/d3-study/index.jsx';
 import MapTalks from './module/maptalks/index.jsx';
+
+const LayoutPage = lazy(() => import(/* webpackChunkName: 'Layout' */ './module/layout/index.jsx'))
+const UploadPage = lazy(() => import(/* webpackChunkName: 'Upload' */ './module/upload/index.jsx'))
+
+const Layout = function (props) {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <LayoutPage />
+        </Suspense>
+    )
+}
+const Upload = function () {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <UploadPage />
+        </Suspense>
+    )
+}
+
+const Drag = function () {
+    return (
+        <DynamicImport load={() => import(/* webpackChunkName: 'Drag' */ './module/drag/index.jsx')} />
+    )
+}
+const Date = function () {
+    return (
+        <DynamicImport load={() => import(/* webpackChunkName: 'Date' */ './module/date/index.jsx')} />
+    )
+}
 
 
 let MainWithRouter = withRouter(class Index extends React.Component {
