@@ -10,4 +10,11 @@ export default class Home{
         };
     }
 
+    @get('/common/jsonP')
+    async GetJsonP(ctx){
+        let func = ctx.query.callback
+        // 简单的响应
+        ctx.body = func + `('哈哈哈哈')`
+    }
+
 }

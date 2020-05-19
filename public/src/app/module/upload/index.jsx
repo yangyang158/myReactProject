@@ -4,6 +4,9 @@ import {PDFtoIMG} from 'react-pdf-to-image';
 import {observer} from 'mobx-react';
 import file from '../../../../assets/file/data.pdf';
 import './index.less'
+import img1 from '../../../../assets/img/user.png'
+import img2 from '../../../../assets/img/pic.png'
+import img3 from '../../../../assets/img/user-unknown.png'
 @observer
 export default class FileDetal extends React.Component{
 
@@ -15,10 +18,28 @@ export default class FileDetal extends React.Component{
         store.destory()
     }
 
+    testRequest = () => {
+        let ele = document.createElement('script')
+        window.showData = function(res){
+            // console.log('响应结果', res)
+        }
+        ele.type = 'text/javascript'
+        ele.src = 'api/common/jsonP?callback=showData'
+        document.body.appendChild(ele)
+
+    }
+
     render(){
         return (
             <div className="upload-page">
                 <h1>form表单上传</h1>
+                <div style={{background: 'pink'}} onClick={this.testRequest}>
+                    <img src={img1} width={100} style={{background: 'red'}} />
+                    <img src={img2} width={100} style={{background: 'yellow'}} />
+                    <img src={img3} width={100} style={{background: 'green'}} />
+                </div>
+               
+                <div style={{background: 'blue', color: '#fff'}}>23342434</div>
                 <form action="api/common/upload" ref={node=>store.saveForm=node} method="post" encType="multipart/form-data" target="uploadTarget">
                     <input name="file" type="file" onChange={store.onFileSelected} />
                     <input type="submit" value="提交" />
